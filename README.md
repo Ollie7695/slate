@@ -1,2 +1,2 @@
-# slate
-A blank slate template for speeding up new projects
+# Blank Slate
+A template for speeding up new projects
