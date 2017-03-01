@@ -11,10 +11,10 @@ var config = {
 	dist: './../assets/',
 	bowerDir: './bower_components'
 }
+
 var banner = [
 	'/*!\n' +
-	' * <%= package.title %>\n' +
-	' * <%= package.description %>\n' +
+	' * <%= package.title %> - <%= package.description %>\n' +
 	' * @author <%= package.author %>\n' +
 	' * @version <%= package.version %>\n' +
 	' * Copyright ' + new Date().getFullYear() + ' <%= package.description %>, Ltd.\n' +
@@ -38,15 +38,22 @@ gulp.task('build:vendorjs', function(){
 		.pipe(gulp.dest(config.dist + '/js'));
 });
 
+gulp.task('build:vendorcss', function(){
+	var fileArray = bowerFiles();
+	return gulp.src(fileArray)
+		.pipe(plugins.filter(['*.css']))
+		.pipe(plugins.concat('vendor.css'))
+		.pipe(plugins.stripCssComments({
+			preserve : false
+		}))
+		.pipe(gulp.dest(config.dist + '/css'));
+});
+
 gulp.task('build:modernizr', function() {
 	return gulp.src(config.src + '/js/**/*.js')
 		.pipe(plugins.modernizr('modernizr.js', {
 			"options" : [
-				"setClasses",
-				"addTest",
-				"html5printshiv",
-				"testProp",
-				"fnBind"
+				"html5printshiv"
 			]
 		}))
 		.pipe(gulp.dest(config.dist + '/js/'));
@@ -120,6 +127,7 @@ gulp.task('build', function(callback){
 		[
 			'build:modernizr',
 			'build:vendorjs',
+			'build:vendorcss'
 		],
 		'build:iconfont',
 		'build:js',
