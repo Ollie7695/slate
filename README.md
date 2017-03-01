@@ -1,7 +1,8 @@
 # Blank Slate
 A template for speeding up new projects
 
-### Running slate locally
+### Setting up
 
 1. `npm install`
-1. `bower install`
+2. `bower install`
+3. `gulp` or `gulp publish` to compile everything
